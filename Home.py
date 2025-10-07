@@ -29,4 +29,4 @@ else:
 
 geselecteerdModel = geselecteerdModel.selectbox("Kies een model", modellen, index=None, placeholder="Kies een model")
 
-verbruik = verbruik.number_input("Kies een verbruik (l/100km) of (kwh/100km)", min_value=0.0,step=1.0)
+verbruik = verbruik.number_input("Kies een verbruik (l/100km) of (kwh/100km)", min_value=0.0, step=1.0, placeholder=0.00) #TODO: als je er op klikt moeten de nullen weggaan
