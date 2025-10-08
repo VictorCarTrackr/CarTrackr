@@ -1,11 +1,16 @@
+from pathlib import Path
 import streamlit as st
 import kagglehub as kh
 import sqlite3
 import os
 
 
+#Pad settings
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+css_file = current_dir / "styles" / "main.css"
+db_path = current_dir / "Database" / "carMakeModels.db"#os.path.join("Database", "carMakeModels.db")
+
 #Connectie met database
-db_path = os.path.join("Database", "carMakeModels.db")
 connection = sqlite3.connect(db_path)
 c = connection.cursor()
 
