@@ -74,7 +74,7 @@ else:
     brandstofType = None
 
 
-#Functie om totale kosten te berekenen
+#Functie om brandstofkosten te berekenen
 def totaalKostenBerekenen(totaalVerbruik, brandstofType):
     if brandstofType == "Petrol" or brandstofType == "Plug-in Hybrid":
         totaalKosten = totaalVerbruik * benzinePrijs
