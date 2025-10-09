@@ -74,6 +74,23 @@ else:
     brandstofType = None
 
 
+#Functie om totale kosten te berekenen
+def totaalKostenBerekenen(totaalVerbruik, brandstofType):
+    if brandstofType == "Petrol" or brandstofType == "Plug-in Hybrid":
+        totaalKosten = totaalVerbruik * benzinePrijs
+        st.markdown(f"Je benzine kosten zijn ongeveer €{totaalKosten:.2f}")
+        st.markdown("Je hebt een benzine auto.")
+    elif brandstofType == "Diesel":
+        totaalKosten = totaalVerbruik * dieselPrijs
+        st.markdown(f"Je diesel kosten zijn ongeveer €{totaalKosten:.2f}")
+        st.markdown("Je hebt een diesel auto.")
+    else:
+        totaalKosten = totaalVerbruik * electriciteitPrijs
+        st.markdown(f"Je elektriciteits kosten zijn ongeveer €{totaalKosten:.2f}")
+        st.markdown("Je hebt een elektrische of semi elektrische auto.")
+    return totaalKosten
+
+
 #Statistieken knop
 if st.button("Bereken statistieken van je auto!"):
     if geselecteerdMerk and geselecteerdModel and verbruik is not None and aantalKm is not None:
@@ -82,18 +99,7 @@ if st.button("Bereken statistieken van je auto!"):
         if verbruik <= 0:
             st.error("Het verbruik moet groter zijn dan 0.")
         else:
-            if brandstofType == "Petrol" or brandstofType == "Plug-in Hybrid":
-                totaalKosten = totaalVerbruik * benzinePrijs
-                st.markdown(f"Je totale kosten zijn ongeveer €{totaalKosten:.2f}.")
-                st.markdown("Je hebt een benzine auto.")
-            elif brandstofType == "Diesel":
-                totaalKosten = totaalVerbruik * dieselPrijs
-                st.markdown(f"Je totale kosten zijn ongeveer €{totaalKosten:.2f}.")
-                st.markdown("Je hebt een diesel auto.")
-            else:
-                totaalKosten = totaalVerbruik * electriciteitPrijs
-                st.markdown(f"Je totale kosten zijn ongeveer €{totaalKosten:.2f}.")
-                st.markdown("Je hebt een elektrische of semi elektrische auto.")
+            totaalKostenBerekenen(totaalVerbruik, brandstofType)
             st.markdown(f"Je hebt al ongeveer {totaalVerbruik} liter verbruikt voor {aantalKm} kilometer.")
     else:
         st.error("Vul alle velden in om de statistieken te berekenen.")
