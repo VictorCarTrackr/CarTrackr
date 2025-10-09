@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
-    font-family: "Montserrat", sans-serif;  
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
+    font-family: "Montserrat", sans-serif !important;
+    text-decoration: none !important;
+    color: White ;
+    font-weight: 500; 
+}
+
+div.stButton > button:first-child{
+    background-color: #1E90FF !important; 
+    padding: 0px 15px !important;
+}
+
+div.stButton > button:first-child:hover {
+    background-color: #1871ca !important; 
 }
