@@ -1,6 +1,8 @@
 from pathlib import Path
 import streamlit as st
 import sqlite3
+from authlib.integrations.requests_client import OAuth2Session
+
 
 
 
@@ -103,3 +105,5 @@ if st.button("Bereken statistieken van je auto!"):
             st.markdown(f"Je hebt al ongeveer {totaalVerbruik} liter verbruikt voor {aantalKm} kilometer.")
     else:
         st.error("Vul alle velden in om de statistieken te berekenen.")
+
+
