@@ -1,8 +1,6 @@
 from pathlib import Path
 import streamlit as st
 import sqlite3
-from authlib.integrations.requests_client import OAuth2Session
-
 
 
 
@@ -33,6 +31,13 @@ electriciteitPrijs = 0.40  #Prijs per kWh elektriciteit
 st.set_page_config(page_title=paginaTitel, page_icon=favicon, layout="wide")
 
 
+if not st.user.is_logged_in:
+    st.button("Login met microsoft", on_click=lambda:st.login("microsoft"))
+else:
+    st.write(f"Welkom {st.user.name}!")
+    st.button("Log uit", on_click=lambda:st.logout())
+
+
 st.title("Voeg je auto toe!")
 st.markdown("Vul de gegevens van je auto in en start met het bijhouden van je auto statistieken.")
 
@@ -45,12 +50,11 @@ def queryMerken_db():
     merken = [row[0] for row in c.fetchall()]
     return merken
 
-
 geselecteerdMerk, geselecteerdModel, verbruik, aantalKm = st.columns(4, vertical_alignment="bottom")
 
 merken = queryMerken_db()
-geselecteerdMerk = geselecteerdMerk.selectbox("Kies een merk", merken, index=None, placeholder="Kies een merk")
 
+geselecteerdMerk = geselecteerdMerk.selectbox("Kies een merk", merken, index=None, placeholder="Kies een merk")
 
 if geselecteerdMerk:
     c.execute("SELECT Cars_Names FROM cars WHERE Company_Names = ? ORDER BY Cars_Names", (geselecteerdMerk,))
@@ -58,13 +62,11 @@ if geselecteerdMerk:
 else:
     modellen = []
 
-
 geselecteerdModel = geselecteerdModel.selectbox("Kies een model", modellen, index=None, placeholder="Kies een model")
 
-
 verbruik = verbruik.number_input("Geef een verbruik in (l/100km) of (kwh/100km)", min_value=0.00, step=1.00, placeholder=0.00, value = None) 
-aantalKm = aantalKm.number_input("Geef het aantal kilometers van je auto in", min_value=0, step=1, placeholder=0, value = None)
 
+aantalKm = aantalKm.number_input("Geef het aantal kilometers van je auto in", min_value=0, step=1, placeholder=0, value = None)
 
 if modellen:
     brandstofType = c.execute("SELECT DISTINCT Fuel_Types FROM cars WHERE Cars_Names = ? ORDER BY Fuel_Types", (geselecteerdModel,)).fetchone()
@@ -74,7 +76,6 @@ if modellen:
         brandstofType = None
 else:
     brandstofType = None
-
 
 #Functie om brandstofkosten te berekenen
 def totaalKostenBerekenen(totaalVerbruik, brandstofType):
@@ -92,9 +93,8 @@ def totaalKostenBerekenen(totaalVerbruik, brandstofType):
         st.markdown("Je hebt een elektrische of semi elektrische auto.")
     return totaalKosten
 
-
-#Statistieken knop
-if st.button("Bereken statistieken van je auto!"):
+def submitButton(geselecteerdModel, verbruik, aantalKm):
+    #TODO deze tekst onder de knop zetten.
     if geselecteerdMerk and geselecteerdModel and verbruik is not None and aantalKm is not None:
         #Statistieken berekenen
         totaalVerbruik = (verbruik / 100) * aantalKm
@@ -105,5 +105,10 @@ if st.button("Bereken statistieken van je auto!"):
             st.markdown(f"Je hebt al ongeveer {totaalVerbruik} liter verbruikt voor {aantalKm} kilometer.")
     else:
         st.error("Vul alle velden in om de statistieken te berekenen.")
+
+#Statistieken knop
+st.button("Bereken statistieken van je auto!", on_click=submitButton, args=(geselecteerdModel, verbruik, aantalKm))
+    
+
 
 
