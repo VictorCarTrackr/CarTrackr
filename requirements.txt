@@ -1,3 +1,5 @@
 kagglehub
 streamlit-extras
 Authlib
+fastapi
+uvicorn

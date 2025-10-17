@@ -120,9 +120,11 @@ def submitButton(geselecteerdModel, verbruik, aantalKm, brandstofType):
             }
             df = pd.DataFrame([tabel], index=None)
             st.write(df)
-            kostenGrafiek, kilometerGrafiek = st.columns(2, vertical_alignment="bottom")
-            kilometerGrafiek = st.bar_chart(df.loc[:, ["Aantal kilometers", "Model"]].set_index("Model"), height=400)
-            kostenGrafiek = st.bar_chart(df.loc[:, ["Totaal kosten (€)", "Model"]].set_index("Model"),  height=400)
+            kostenGrafiek, kilometerGrafiek = st.columns(2, vertical_alignment="bottom", gap="large")
+            with kilometerGrafiek:
+                st.bar_chart(df.loc[:, ["Totaal verbruik (l) of (kwh)", "Model"]].set_index("Model"), height=400)
+            with kostenGrafiek:
+                st.bar_chart(df.loc[:, ["Totaal kosten (€)", "Model"]].set_index("Model"),  height=400)
     else:
         st.error("Vul alle velden in om de statistieken te berekenen.")
 
