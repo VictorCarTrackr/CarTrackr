@@ -1,6 +1,5 @@
 from pathlib import Path
 import streamlit as st
-import sqlite3
 import pandas as pd
 import requests
 
@@ -26,8 +25,8 @@ baseUrl = "http://127.0.0.1:8000" #API basis URL
 
 
 
-
 st.set_page_config(page_title=paginaTitel, page_icon=favicon, layout="wide")
+
 
 with st.sidebar:
     #Login met microsoft

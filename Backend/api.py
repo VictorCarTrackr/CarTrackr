@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pathlib import Path
 import sqlite3
 
+
 app = FastAPI()
 
 
@@ -45,4 +46,5 @@ def get_brandstoftype(model: str):
         return {"brandstoftype": brandstoftype[0]}
     else:
         return {"brandstoftype": None}
+
 
